@@ -14,10 +14,17 @@ let timer = 100;
 let currentScore = 0;
 let numAnswered = 0;
 let endState = 0;
+let indexOfScore = -1;
+let playerName = '';
+let randomQuestion = 0;
 if(!(localStorage.getItem("highScores"))){
-    localStorage.setItem("highScores", JSON.stringify([]));
+    localStorage.setItem("highScores", JSON.stringify([0]));
 }
-highScores = JSON.parse(localStorage.getItem("highScores"));
+if(!(localStorage.getItem("highScoresNames"))){
+    localStorage.setItem("highScoresNames", JSON.stringify(['']));
+}
+let highScores = JSON.parse(localStorage.getItem("highScores"));
+let highScoresNames = JSON.parse(localStorage.getItem("highScoresNames"));
 
 const gameCards = [
     {
@@ -101,7 +108,6 @@ const gameCards = [
         hasBeenAnswered: false
     },
 ];
-let randomQuestion = 0;
 
 
 const delPlayButton = () => {
@@ -134,7 +140,8 @@ const displayQuestion = () => {
     if(timer <= 0){
         endState = 2;
     }
-    if(endState !== 0){
+    if(endState != 0){
+        console.log("It's here.")
         gameEnd();
     }
     if(gameCards[randomQuestion].hasBeenAnswered){
@@ -195,7 +202,47 @@ const judgeAnswer = (event) => {
 }
 const gameEnd = () => {
     console.log("Game Over!");
+    currentScore = currentScore + timer;
     localStorage.setItem("playedGame", true);
+    if(currentScore >= 50){
+        for(let i = 0; i < highScores.length; i++){
+            if(currentScore > highScores[i]){
+                if(i === 0){
+                    playerName = prompt("New Highscore! Enter You Name, Champion:"); 
+                }else{
+                    playerName = prompt("You made it to the leaderboard! Enter Your Name:");
+                }
+                indexOfScore = i;
+                break;
+            }
+        }
+        if(indexOfScore >= 0){
+            highScores.splice(indexOfScore, 0, currentScore);
+            highScoresNames.splice(indexOfScore, 0, playerName);
+            localStorage.setItem("highScores", JSON.stringify(highScores));
+            localStorage.setItem("highScoresNames", JSON.stringify(highScoresNames));
+        }
+    }
+    resetGame();
+}
+
+const resetGame = () => {
+    questionNum = 0;
+    timer = 100;
+    currentScore = 0;
+    numAnswered = 0;
+    endState = 0;
+    indexOfScore = -1;
+    playerName = '';
+    randomQuestion = 0;
+    $options.style.display = 'none';
+    for(let i = 0; i < gameCards.length; i++){
+        gameCards[i].hasBeenAnswered = false;
+    }
+
+}
+
+const displayScores = () =>{
     
 }
 
@@ -210,3 +257,9 @@ const playGame = (event) => {
 }
 
 playGameButton.addEventListener("click", playGame);
+if(localStorage.getItem("playedGame")){
+    const highScoreButton = $root.appendChild(document.createElement('button'));
+    highScoreButton.textContent = "High Scores";
+    highScoreButton.setAttribute('id', 'highScoreBtn');
+    highScoreButton.addEventListener("click", displayScores);
+}
