@@ -1,0 +1,55 @@
+
+
+#options {
+    list-style-type: none;
+    background-color: aqua;
+    display: none;
+    flex-wrap: wrap;
+    
+}
+
+#options button {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2em;
+    
+}
+#options li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: .25em;
+    min-width: 48%;
+}
+
+#
+
+#play {
+    font-size: 1.75em;
+}
+
+h1{
+    font-size: 2em;
+}
+h2{
+    font-size: 2em;
+}
+
+#question {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    font-size: 2em;
+    margin-bottom: 2em;
+}
+
+header {
+    font-size: 1.5em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+h1, h2{
+    font-weight: bold;
+}

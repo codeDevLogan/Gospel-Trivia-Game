@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gospel Trivia</title>
+    <link rel="stylesheet" href="./assets/css/reset.css"></style>
+    <link rel="stylesheet" href="./assets/css/style.css"></style>
+    <script defer src="./assets/js/script.js"></script>
 </head>
-<body>
+<body id="root">
+    <header>
+        <h1>
+            Gospel Quiz
+        </h1>
+        <h2 id="counter"></h2>
+        <h2 id="questionNum"></h2>
+        <h2 id="score"></h2>
+    </header>
+    
     <button id="play">Play Game</button>
+    <h2 id="question"></h2>
+    <ul id="options">
+        <li>
+            <button id="option-1" hidden></button>
+        </li>
+        <li>
+            <button id="option-2" hidden></button>
+        </li>
+        <li>
+            <button id="option-3" hidden></button>
+        </li>
+        <li>
+            <button id="option-4" hidden></button>
+        </li>
+    </ul>
 </body>
 </html>
