@@ -10,7 +10,8 @@ This project is designed to be a fun and enlightning expirenece for all who play
 
 To use this application, first load the provided URL, then manuvere the mouse to click on the "Play Game" Button. You will then be given a series of questions to answer to the best of your abilities.
 
-![Main Menu](./assets/images/_C__Users_Logan%2520School_bootcamp_Gospel-Trivia-Game_index.html%20.png)
+![Main Menu](./assets/images/_C__Users_Logan%2520School_bootcamp_Gospel-Trivia-Game_index.html.png)
+
 ![Gameplay](./assets/images/_C__Users_Logan%2520School_bootcamp_Gospel-Trivia-Game_index.html%20(1).png)
   
 
