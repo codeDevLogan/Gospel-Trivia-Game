@@ -17,6 +17,8 @@ let endState = 0;
 let indexOfScore = -1;
 let playerName = '';
 let randomQuestion = 0;
+let allAnswered = false;
+let arrOfHighScores = [];
 if(!(localStorage.getItem("highScores"))){
     localStorage.setItem("highScores", JSON.stringify([0]));
 }
@@ -124,32 +126,39 @@ const startTimer = () => {
     }, 1000);
 }
 const displayQuestion = () => {
-    randomQuestion = getRandom(1, gameCards.length)-1;
+    try{
+        randomQuestion = getRandom(1, gameCards.length)-1;
+    }catch (e) {
+        if(e instanceof RangeError){
+            gameEnd();
+        }
+    }
     $questionNum.textContent = "Question #" +questionNum;
     $score.textContent = "Score: " +currentScore;
     
-    
-    for(let i = 0; i<gameCards.length; i++){
-        if(gameCards[i].hasBeenAnswered){
-            numAnswered++;
-        }
-    }
-    if(numAnswered === 8){
+    if(numAnswered === gameCards.length){
+        allAnswered = true;
         endState = 1;
     }
+    if(!allAnswered){
+        if(gameCards[randomQuestion].hasBeenAnswered){
+            // try{
+                displayQuestion();
+            // } catch (error) {
+            //     console.log(error);
+            //     gameEnd();
+            // }
+        }
+    }else{
+        gameEnd();
+    }
+    console.log(numAnswered);
     if(timer <= 0){
         endState = 2;
     }
-    if(endState != 0){
-        console.log("It's here.")
-        gameEnd();
-    }
-    if(gameCards[randomQuestion].hasBeenAnswered){
-        try{
-            displayQuestion();
-        } catch (error) {
-            gameEnd();
-        }
+    if(endState !== 0){
+        console.log("It's here. " + endState);
+        //gameEnd();
     }
 
     $question.textContent = gameCards[randomQuestion].question;
@@ -187,10 +196,11 @@ const recieveAnswer = () => {
 const judgeAnswer = (event) => {
     event.preventDefault();
     
-    console.log(event.target);
     if(event.target === gameCards[randomQuestion].correctOption){
+        numAnswered++;
         currentScore = currentScore + 25;
         gameCards[randomQuestion].hasBeenAnswered = true;
+        questionNum = questionNum + 1;
         displayQuestion();
     }else{
         timer = timer-10
@@ -227,23 +237,30 @@ const gameEnd = () => {
 }
 
 const resetGame = () => {
-    questionNum = 0;
-    timer = 100;
-    currentScore = 0;
-    numAnswered = 0;
-    endState = 0;
-    indexOfScore = -1;
-    playerName = '';
-    randomQuestion = 0;
-    $options.style.display = 'none';
-    for(let i = 0; i < gameCards.length; i++){
-        gameCards[i].hasBeenAnswered = false;
-    }
-
+    // questionNum = 0;
+    // timer = 100;
+    // currentScore = 0;
+    // numAnswered = 0;
+    // endState = 0;
+    // indexOfScore = -1;
+    // playerName = '';
+    // randomQuestion = 0;
+    // $options.style.display = 'none';
+    // for(let i = 0; i < gameCards.length; i++){
+    //     gameCards[i].hasBeenAnswered = false;
+    // }
+    location.reload();
 }
 
 const displayScores = () =>{
-    
+    const $ulOfHighScores = $root.appendChild(document.createElement('ul'));
+    $ulOfHighScores.setAttribute('id', 'ulOfHS');
+    for(let i = 0; i<highScores.length; i++){
+        if(highScores[i] != 0){
+        arrOfHighScores[i] = $ulOfHighScores.appendChild(document.createElement('li'));
+        arrOfHighScores[i].textContent = (i+1) + '. ' + highScoresNames[i] + ': ' + highScores[i];
+        }
+    }
 }
 
 const playGame = (event) => {

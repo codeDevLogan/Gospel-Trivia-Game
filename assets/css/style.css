@@ -22,10 +22,27 @@
     min-width: 48%;
 }
 
-#
+#ulOfHS {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 
-#play {
-    font-size: 1.75em;
+#ulOfHS li {
+    display: flex;
+    background-color: firebrick;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: .25em 12em;
+    padding: .25em;
+    min-width: 48%;
+    font-size: 2em;
+}
+
+#play, #highScoreBtn {
+    font-size: 2em;
 }
 
 h1{
